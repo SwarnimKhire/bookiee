@@ -1,15 +1,22 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
+import 'package:saturday/screens/detail_page.dart';
 import 'package:saturday/utils/colors.dart';
 import 'package:saturday/utils/texts.dart';
+import 'package:saturday/widgets/bnb.dart';
 import 'package:saturday/widgets/category.dart';
 import 'package:saturday/widgets/place_card.dart';
 import 'package:saturday/widgets/recom.dart';
 import 'package:saturday/widgets/textfields.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {
+   HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -95,19 +102,38 @@ class HomePage extends StatelessWidget {
               style: ftextStyle(18, Colors.black, FontWeight.w600),
             ),
             SizedBox(height: 16),
-           SizedBox(
-            height: 175 ,
-             child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-              Recommended(imgUrl: 'ital', title: 'Explore Aspen'),
-              Recommended(imgUrl: 'ice', title: 'Luxurious Aspen'),
-              Recommended(imgUrl: 'ital', title: 'Explore Aspen'),
-              Recommended(imgUrl: 'ice', title: 'Luxurious Aspen'),
-              ],),
-           ),
+            SizedBox(
+              height: 175,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  Recommended(imgUrl: 'ital', title: 'Explore Aspen'),
+                  Recommended(imgUrl: 'ice', title: 'Luxurious Aspen'),
+                  Recommended(imgUrl: 'ital', title: 'Explore Aspen'),
+                  Recommended(imgUrl: 'ice', title: 'Luxurious Aspen'),
+                ],
+              ),
+            ),
           ],
         ),
+      ),
+      bottomNavigationBar:  bnB(
+        selectedIndex: selectedIndex,
+        ontap: (index) {
+          switch (index) {
+            case 0:
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) =>  HomePage()));
+              break;
+            case 1:
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const DetailPage()));
+              break;
+          }
+          setState(() {
+            selectedIndex = index;
+          });
+        },
       ),
     );
   }
